@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writetober 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap');
+
+  :root {
+    --bg: #000000;
+    --surface: #0e0e0e;
+    --surface2: #181818;
+    --border: rgba(255,255,255,0.12);
+    --border-hover: rgba(255,255,255,0.6);
+    --text: #f0f0f0;
+    --muted: #888;
+    --accent: #ffffff;
+    --tag-bg: rgba(255,255,255,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+
+  header { text-align: center; margin-bottom: 60px; }
+
+  .tagline {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(56px, 11vw, 100px);
+    font-weight: 900;
+    font-style: italic;
+    line-height: 0.88;
+    color: var(--accent);
+    margin-bottom: 10px;
+    letter-spacing: -3px;
+  }
+
+  .year {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .divider {
+    width: 80px;
+    height: 1px;
+    background: rgba(255,255,255,0.25);
+    margin: 0 auto 22px;
+  }
+
+  .subtitle {
+    font-style: italic;
+    font-size: 18px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .rules-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    padding: 26px 30px;
+    margin-bottom: 52px;
+  }
+
+  .rules-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .rules-box ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+
+  .rules-box li {
+    font-size: 15.5px;
+    color: rgba(240,240,240,0.8);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .rules-box li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+  }
+
+  .rules-box li strong { color: var(--accent); font-weight: 400; }
+
+  .hashtag {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .discord-link {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    transition: border-color 0.2s;
+  }
+
+  .discord-link:hover {
+    border-color: var(--accent);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 18px 20px 16px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .card:hover {
+    border-color: var(--border-hover);
+    background: var(--surface2);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 0;
+  }
+
+  .day-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    min-width: 40px;
+  }
+
+  .word {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.3px;
+  }
+
+  .challenge-badge {
+    display: inline-block;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .challenge-text {
+    font-style: italic;
+    font-size: 15px;
+    color: rgba(200,200,200,0.75);
+    line-height: 1.55;
+  }
+
+  .special-tag {
+    background: var(--accent);
+    color: var(--bg);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 2px 7px;
+    margin-left: 8px;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  footer p {
+    font-style: italic;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  footer .byline {
+    font-size: 13px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 4px;
+  }
+
+  footer .byline a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+  }
+
+  footer .byline a:hover {
+    color: var(--accent);
+  }
+
+  footer .ht {
+    color: var(--accent);
+  }
+
+  .cafe-link {
+    display: inline-block;
+    margin-top: 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .cafe-link:hover {
+    color: rgba(255,255,255,0.75);
+    border-color: rgba(255,255,255,0.4);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <p class="tagline">Um desafio de escrita criativa</p>
+    <h1>Write<br>tober</h1>
+    <p class="year">outubro &middot; 2026</p>
+    <div class="divider"></div>
+    <p class="subtitle">31 palavras. 31 dias.<br>Qualquer formato. Qualquer tamanho. Só escreva.</p>
+  </header>
+
+  <div class="rules-box">
+    <p class="rules-title">Regras</p>
+    <ul>
+      <li>Escreva uma vez por dia durante outubro, usando o prompt do dia.</li>
+      <li>Formato é livre — poesia, prosa, microficção, carta, lista, o que vier.</li>
+      <li>Não precisa ser perfeito. Precisa existir.</li>
+      <li>Compartilhe sua escrita e participe usando a hashtag <span class="hashtag">#Writetober2026</span></li>
+      <li>Entre na comunidade no <a href="https://discord.gg/XnznRwUfb" target="_blank" class="discord-link">Discord</a> para trocar com outras pessoas que estão escrevendo.</li>
+    </ul>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <p>Feito com tinta e intenção &middot; <span class="ht">#Writetober2026</span></p>
+    <p class="byline">uma ideia de Bárbara Rossalli (<a href="https://instagram.com/bahssauro" target="_blank">@bahssauro</a>)</p>
+    <a href="https://link.mercadopago.com.br/writertober" target="_blank" class="cafe-link">☕ pague um café pra Báh</a>
+  </footer>
+
+</div>
+<script>
+const prompts = [
+  { word: "LIMIAR",     challenge: "Comece cada frase com uma preposição" },
+  { word: "FERRUGEM",  challenge: "Use apenas frases curtas — máximo 7 palavras cada" },
+  { word: "MARÉ",      challenge: "Escreva inteiramente em segunda pessoa (você ou tu)" },
+  { word: "SOMBRA",    challenge: "Proibido: verbos de estado (ser, estar, parecer, ficar)" },
+  { word: "RAIZ",      challenge: "Repita uma palavra-âncora pelo menos 5 vezes" },
+  { word: "VAZIO",     challenge: "Use o espaço em branco como pontuação intencional" },
+  { word: "FOGO",      challenge: "Escreva em ordem inversa: do desfecho ao início" },
+  { word: "ESPELHO",   challenge: "Estrutura especular — o fim repete o começo" },
+  { word: "NÉVOA",     challenge: "Apenas sinestesia — misture os cinco sentidos" },
+  { word: "DÍVIDA",    challenge: "Formato: carta não enviada" },
+  { word: "CARAPAÇA",  challenge: "Use o máximo possível de monossílabos" },
+  { word: "AURORA",    challenge: "Anáfora: repita o mesmo início em cada verso ou parágrafo" },
+  { word: "VENENO",    challenge: "Escreva em forma de lista numerada ou com marcadores" },
+  { word: "OSSO",      challenge: "Proibido: adjetivos de qualquer tipo" },
+  { word: "TRAVESSIA", challenge: "Mude o ponto de vista a cada parágrafo" },
+  { word: "BARRO",     challenge: "Inclua pelo menos três onomatopeias" },
+  { word: "CHUVA",     challenge: "Use apenas o presente do indicativo, sem exceção" },
+  { word: "CICATRIZ",  challenge: "Um único parágrafo sem ponto final até o último" },
+  { word: "SILVO",     challenge: "Aliteração dominante — escolha um som e repita" },
+  { word: "MAPA",      challenge: "Inclua instruções ou direções no corpo do texto" },
+  { word: "FERIDA",    challenge: "Escreva em voz passiva de forma intencional e bela" },
+  { word: "ÂNCORA",    challenge: "Comece e termine com exatamente a mesma imagem" },
+  { word: "PELE",      challenge: "Apenas sensações táteis — sem imagens visuais" },
+  { word: "RELÓGIO",   challenge: "Cada frase em um tempo verbal diferente" },
+  { word: "FERA",      challenge: "Personifique o abstrato; abstraia o concreto" },
+  { word: "CINZA",     challenge: "Mantenha um único campo semântico do início ao fim" },
+  { word: "PORTA",     challenge: "Escreva apenas o que não acontece, nunca o que acontece" },
+  { word: "FENDA",     challenge: "Intercale dois textos paralelos em alternância" },
+  { word: "LUA",       challenge: "Proibido usar a palavra do prompt em qualquer forma" },
+  { word: "RUÍNA",     challenge: "Texto fragmentado — frases incompletas são válidas" },
+  { word: "RENASCER",  challenge: "Use as primeiras palavras dos seus 30 textos anteriores para construir este", special: true },
+];
+
+const grid = document.getElementById('grid');
+
+prompts.forEach((p, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-header">
+      <span class="day-num">DIA ${String(i+1).padStart(2,'0')}</span>
+      <span class="word">${p.word}${p.special ? '<span class="special-tag">final</span>' : ''}</span>
+    </div>
+  `;
+  grid.appendChild(card);
+});
+</script>
+</body>
+</html>
