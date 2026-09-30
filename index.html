@@ -255,11 +255,75 @@
     color: rgba(255,255,255,0.75);
     border-color: rgba(255,255,255,0.4);
   }
+
+  /* ── Gerador de formato ── */
+  .generator {
+    margin-bottom: 52px;
+    border: 1px solid var(--border);
+    padding: 28px 30px 26px;
+    background: var(--surface);
+  }
+
+  .generator-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .format-display {
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .format-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.1;
+    margin-bottom: 8px;
+    transition: opacity 0.2s ease;
+  }
+
+  .format-desc {
+    font-style: italic;
+    font-size: 15px;
+    color: rgba(180,180,180,0.7);
+    line-height: 1.5;
+    transition: opacity 0.2s ease;
+  }
+
+  .format-name.fading,
+  .format-desc.fading { opacity: 0; }
+
+  .generator-btn {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .generator-btn:hover {
+    color: var(--accent);
+    border-color: rgba(255,255,255,0.4);
+  }
 </style>
 </head>
 <body>
-<div style="background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; padding: 10px 16px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: rgba(255,255,255,0.4);">
-</div>
 <div class="container">
 
   <header>
@@ -279,6 +343,16 @@
       <li>Compartilhe sua escrita e participe usando a hashtag <span class="hashtag">#Writertober2026</span></li>
       <li>Entre na comunidade no <a href="https://discord.gg/XnznRwUfb" target="_blank" class="discord-link">Discord</a> para trocar com outras pessoas que estão escrevendo.</li>
     </ul>
+  </div>
+
+  <div class="generator">
+    <p class="generator-label">Gerador de formato <span style="font-size:9px; letter-spacing:0.2em; color:rgba(255,255,255,0.2); margin-left:10px;">— opcional</span></p>
+    <p style="font-style:italic; font-size:13.5px; color:rgba(255,255,255,0.3); margin-bottom:18px; line-height:1.5;">Não sabe por onde começar? Sorteie um formato. Ou ignore completamente — o formato é sempre livre.</p>
+    <div class="format-display">
+      <div class="format-name" id="fmt-name">—</div>
+      <div class="format-desc" id="fmt-desc">Clique no botão para sortear um formato de escrita.</div>
+    </div>
+    <button class="generator-btn" onclick="sortearFormato()">↻ Sortear formato</button>
   </div>
 
   <div class="grid" id="grid"></div>
@@ -325,6 +399,53 @@ const prompts = [
   { word: "RENASCER",  challenge: "Use as primeiras palavras dos seus 30 textos anteriores para construir este", special: true },
 ];
 
+// ── Gerador de formato ──
+const formatos = [
+  { nome: "Poesia livre",        desc: "Versos sem métrica ou rima obrigatória. Deixa o ritmo surgir do que você está dizendo." },
+  { nome: "Haiku",               desc: "Três linhas: 5, 7 e 5 sílabas. Um instante, uma imagem, uma sensação." },
+  { nome: "Soneto",              desc: "14 versos em dois quartetos e dois tercetos. Estrutura rígida, emoção à solta." },
+  { nome: "Poema em prosa",      desc: "Parece parágrafo, soa como poema. Sem quebra de verso, mas com toda a carga lírica." },
+  { nome: "Microficção",         desc: "Uma história completa em até 100 palavras. Cada palavra precisa ganhar seu lugar." },
+  { nome: "Conto",               desc: "Personagem, tensão, virada. Uma cena ou sequência com começo, meio e fim." },
+  { nome: "Carta",               desc: "Escreva para alguém — real ou imaginário, vivo ou não. Fale diretamente." },
+  { nome: "Carta não enviada",   desc: "Tudo que você nunca disse. Para quem for — e também para você mesmo." },
+  { nome: "Diário",              desc: "Uma entrada de diário: data, voz íntima, o que aconteceu ou o que ficou." },
+  { nome: "Lista",               desc: "Uma lista pode ser poema, narrativa, confissão. Deixa a forma guiar o conteúdo." },
+  { nome: "Monólogo",            desc: "Uma voz falando sem pausa. Pode ser um personagem, pode ser você." },
+  { nome: "Diálogo",             desc: "Só falas. Sem narrador, sem explicação. O que não é dito também conta." },
+  { nome: "Segunda pessoa",      desc: "Você. O leitor. O personagem. \"Você entra na sala e—\". Coloca quem lê dentro da história." },
+  { nome: "Stream of consciousness", desc: "Sem filtro, sem ordem. Escreve como o pensamento aparece — associativo, fragmentado, honesto." },
+  { nome: "Verbete",             desc: "Como um dicionário define a palavra do dia. Etimologia inventada, usos poéticos, exemplos." },
+  { nome: "Manifesto",           desc: "Uma declaração. Um posicionamento. \"Acredito que—\". Escreva o que você defende." },
+  { nome: "Receita",             desc: "Ingredientes e modo de preparo — mas de algo que não se cozinha. Saudade, coragem, esquecimento." },
+  { nome: "Epitáfio",            desc: "Uma inscrição para uma lápide. Pode ser de algo, não apenas alguém. De uma fase, de um hábito." },
+  { nome: "Cena",                desc: "Sem início nem fim — só o meio. Um momento capturado, como uma fotografia em palavras." },
+  { nome: "Descrição pura",      desc: "Sem narrativa, sem opinião. Só o que existe. Descreva com precisão absoluta." },
+];
+
+let ultimoIndex = -1;
+
+function sortearFormato() {
+  const nameEl = document.getElementById('fmt-name');
+  const descEl = document.getElementById('fmt-desc');
+
+  nameEl.classList.add('fading');
+  descEl.classList.add('fading');
+
+  setTimeout(() => {
+    let idx;
+    do { idx = Math.floor(Math.random() * formatos.length); } while (idx === ultimoIndex);
+    ultimoIndex = idx;
+
+    nameEl.textContent = formatos[idx].nome;
+    descEl.textContent = formatos[idx].desc;
+
+    nameEl.classList.remove('fading');
+    descEl.classList.remove('fading');
+  }, 180);
+}
+
+// ── Grid de prompts ──
 const grid = document.getElementById('grid');
 
 prompts.forEach((p, i) => {
